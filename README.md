@@ -4,7 +4,7 @@ A Mac terminal for Claude Code with a game-style HUD.
 
 **[Download TokenHeist-1.0.0.dmg](https://github.com/pionion-ai/token-heist/releases/download/v1.0.0/TokenHeist-1.0.0.dmg)** · [Project page](https://pionion-ai.github.io/token-heist/)
 
-![Token Heist](card.png)
+![Token Heist](preview.png)
 
 ![A Token Heist session](img/session.jpg)
 
