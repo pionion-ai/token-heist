@@ -71,11 +71,12 @@ h1, h2, h3 { font-family: var(--poster); font-weight: 800; text-transform: upper
 .brand { display: flex; align-items: center; gap: 12px; font: italic 800 1.25rem/1 var(--poster); letter-spacing: .14em; text-transform: uppercase; }
 .brand b { background: linear-gradient(90deg, var(--orange), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .brand i { font-style: normal; font-size: .8rem; letter-spacing: .08em; color: var(--ink); background: var(--teal); padding: 3px 9px; border-radius: 99px; }
-.pitch { max-width: 33rem; margin-top: 64px; display: flex; flex-direction: column; gap: 22px; }
-h1 { font-size: clamp(3rem, 7.2vw, 5.25rem); line-height: .92; letter-spacing: .005em; }
+.pitch { max-width: 36rem; margin-top: 64px; display: flex; flex-direction: column; gap: 22px; }
+h1 { font-size: clamp(2.6rem, 6.2vw, 4.5rem); line-height: .92; letter-spacing: .005em; }
 h1 span { display: block; }
+@media (min-width: 861px) { h1 span { white-space: nowrap; } }
 h1 .b { color: var(--sun); }
-.pitch .script { font-size: 2.1rem; line-height: 1; color: var(--pink); transform: rotate(-3deg); transform-origin: left; margin: -4px 0 2px; }
+.pitch .script { font-size: clamp(1.5rem, 5.6vw, 2.1rem); white-space: nowrap; line-height: 1; color: var(--pink); transform: rotate(-3deg); transform-origin: left; margin: -4px 0 2px; }
 .pitch p { margin: 0; max-width: 30rem; color: var(--cream); }
 .go-shadow { display: inline-block; filter: drop-shadow(7px 7px 0 var(--sun)); align-self: flex-start; margin-top: 6px; }
 .go {
@@ -159,9 +160,9 @@ footer p { margin: 0 0 8px; max-width: 52rem; }
   <div class="wrap">
     <div class="brand"><b>Token Heist</b><i>TLV</i></div>
     <div class="pitch">
-      <h1><span>My son got the game.</span><span class="b">I got a deadline.</span></h1>
-      <div class="script">so I gave my terminal a HUD</div>
-      <p>Token Heist is a Mac terminal for Claude Code that looks like the thing everyone else is playing. Same work, same prompts, same bills. Now with heat, a radar, a radio and a flamingo.</p>
+      <h1><span>A cursed purple</span><span>terminal</span><span class="b">for Claude Code.</span></h1>
+      <div class="script">with achievements, a radio and a flamingo</div>
+      <p>Token Heist is a Mac terminal that makes Claude Code look like a game. Underneath it is the same Claude Code you already use.</p>
       <span class="go-shadow"><a class="go" id="download" href="https://github.com/pionion-ai/token-heist/releases/download/v1.0.0/TokenHeist-1.0.0.dmg">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="square" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
         Download for Mac</a></span>
@@ -227,7 +228,6 @@ footer p { margin: 0 0 8px; max-width: 52rem; }
   </section>
 
   <div class="wrap again">
-    <h2>He has side missions.<br>You have a backlog.</h2>
     <span class="go-shadow"><a class="go" href="https://github.com/pionion-ai/token-heist/releases/download/v1.0.0/TokenHeist-1.0.0.dmg">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="square" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
       Download for Mac</a></span>
