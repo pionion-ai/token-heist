@@ -6,8 +6,6 @@ A Mac terminal for Claude Code with a game-style HUD.
 
 ![Token Heist](preview.png)
 
-![A Token Heist session](img/session.jpg)
-
 | | |
 |---|---|
 | ![The Stash](img/stash.jpg) | ![A weapon acquired](img/celebration.jpg) |
