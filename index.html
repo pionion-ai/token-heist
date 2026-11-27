@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Heist</title>
+<meta name="description" content="A Mac terminal for Claude Code with a game-style HUD. Free download.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Token Heist">
+<meta property="og:description" content="My son got the game. I got a deadline. So I gave my terminal a HUD. A free Mac terminal for Claude Code.">
+<meta property="og:url" content="https://pionion-ai.github.io/token-heist/">
+<meta property="og:image" content="https://pionion-ai.github.io/token-heist/card.png">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="900">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pionion-ai.github.io/token-heist/card.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;1,800&family=JetBrains+Mono:wght@500&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,700;1,6..12,400&family=Yellowtail&display=swap">
+<style>
+/* Layout: one poster (art + headline + the single loud button), then the HUD
+   read as a legend, then proof shots, then the four install steps.
+   Dark neon is the base; one cream paper slip on the page. */
+:root {
+  color-scheme: dark;
+  --night: #140B2E;
+  --plate: #22124A;
+  --pink: #FF3EA5;
+  --teal: #19E3D1;
+  --orange: #FF8A3C;
+  --violet: #9B6BFF;
+  --sun: #FFD23F;
+  --cream: #FFF1E0;
+  --ink: #140B2E;
+  --dim: #B9A9DC;
+  --poster: "Futura-CondensedExtraBold", "Futura Condensed ExtraBold", "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --prose: "Avenir Next", "Nunito Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --script: "Brush Script MT", "Yellowtail", cursive;
+  --mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --cut: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+* { box-sizing: border-box; }
+html { background: var(--night); }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--cream);
+  font: 400 1.0625rem/1.55 var(--prose);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: var(--teal); }
+a:focus-visible, .go:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--poster); font-weight: 800; text-transform: uppercase; margin: 0; text-wrap: balance; }
+.script { font-family: var(--script); text-transform: none; font-weight: 400; }
+
+/* Poster */
+.poster { position: relative; overflow: hidden; border-bottom: 3px solid var(--pink); }
+.poster .art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 60%; }
+.poster::before {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(90deg, var(--night) 0%, rgba(20,11,46,.94) 34%, rgba(20,11,46,.55) 52%, rgba(20,11,46,0) 70%);
+}
+.poster .wrap { position: relative; z-index: 2; padding-block: 28px 72px; }
+.brand { display: flex; align-items: center; gap: 12px; font: italic 800 1.25rem/1 var(--poster); letter-spacing: .14em; text-transform: uppercase; }
+.brand b { background: linear-gradient(90deg, var(--orange), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.brand i { font-style: normal; font-size: .8rem; letter-spacing: .08em; color: var(--ink); background: var(--teal); padding: 3px 9px; border-radius: 99px; }
+.pitch { max-width: 33rem; margin-top: 64px; display: flex; flex-direction: column; gap: 22px; }
+h1 { font-size: clamp(3rem, 7.2vw, 5.25rem); line-height: .92; letter-spacing: .005em; }
+h1 span { display: block; }
+h1 .b { color: var(--sun); }
+.pitch .script { font-size: 2.1rem; line-height: 1; color: var(--pink); transform: rotate(-3deg); transform-origin: left; margin: -4px 0 2px; }
+.pitch p { margin: 0; max-width: 30rem; color: var(--cream); }
+.go-shadow { display: inline-block; filter: drop-shadow(7px 7px 0 var(--sun)); align-self: flex-start; margin-top: 6px; }
+.go {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: var(--pink); color: var(--ink); text-decoration: none;
+  font: 800 1.75rem/1 var(--poster); text-transform: uppercase; letter-spacing: .02em;
+  padding: 18px 40px 18px 44px; clip-path: var(--cut);
+  transition: transform .12s ease;
+}
+.go:hover { transform: translate(2px, 2px); }
+.go svg { width: 22px; height: 22px; }
+.facts { font-size: .9rem; color: var(--dim); margin-top: 4px !important; }
+
+/* Session shot */
+.shot-band { margin-top: -36px; position: relative; z-index: 3; }
+.frame { border: 2px solid var(--violet); background: var(--plate); box-shadow: 10px 10px 0 rgba(155,107,255,.28); }
+.frame img { width: 100%; }
+.cap { font-size: .9rem; color: var(--dim); margin: 16px 0 0; max-width: 46rem; }
+
+/* Legend */
+section { padding-block: 84px 0; }
+h2 { font-size: clamp(2.1rem, 4.6vw, 3.1rem); line-height: 1; }
+h2 .script { color: var(--sun); font-size: .8em; margin-right: .18em; }
+.lede { max-width: 40rem; margin: 14px 0 0; color: var(--dim); }
+.legend { list-style: none; padding: 0; margin: 36px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.legend li { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 18px; align-items: baseline; padding: 15px 0; border-top: 1px solid rgba(155,107,255,.32); }
+.legend .k { font: 800 1.3rem/1.1 var(--poster); text-transform: uppercase; letter-spacing: .02em; }
+.legend .v { color: var(--cream); font-size: 1rem; }
+.legend .v code { font: 500 .88em var(--mono); color: var(--teal); }
+.diamonds { letter-spacing: .12em; color: var(--sun); font-family: var(--prose); font-size: .95rem; display: block; margin-top: 4px; }
+.k.pink { color: var(--pink); } .k.teal { color: var(--teal); } .k.orange { color: var(--orange); } .k.violet { color: var(--violet); } .k.sun { color: var(--sun); }
+
+/* Gallery */
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 36px; }
+.shots figure { margin: 0; }
+.shots figcaption { margin-top: 12px; font-size: .95rem; color: var(--dim); }
+.shots figcaption b { font: 800 1.15rem/1 var(--poster); text-transform: uppercase; color: var(--cream); margin-right: 8px; letter-spacing: .02em; }
+.shots .frame { box-shadow: 7px 7px 0 rgba(155,107,255,.22); }
+
+/* Install */
+.install { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: start; margin-top: 36px; }
+.steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 18px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); gap: 14px; align-items: baseline; }
+.steps li::before { content: counter(s); font: 800 2rem/1 var(--poster); color: var(--pink); }
+.steps code, .slip code { font: 500 .88em var(--mono); }
+.slip-shadow { filter: drop-shadow(7px 7px 0 var(--pink)); transform: rotate(1.2deg); }
+.slip { background: var(--cream); color: var(--ink); padding: 26px 30px 28px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%); }
+.slip h3 { font-size: 1.5rem; line-height: 1; }
+.slip h3 .script { font-size: 1.15em; margin-right: .2em; }
+.slip ul { margin: 14px 0 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: .98rem; }
+.slip a { color: #6A2BD9; }
+
+.again { text-align: center; padding-block: 96px 0; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.again .go-shadow { align-self: center; }
+.sum { font: 500 .78rem/1.5 var(--mono); color: var(--dim); overflow-wrap: anywhere; max-width: 100%; margin: 0; }
+
+footer { margin-top: 96px; border-top: 1px solid rgba(155,107,255,.32); padding-block: 28px 44px; font-size: .88rem; color: var(--dim); }
+footer p { margin: 0 0 8px; max-width: 52rem; }
+
+@media (max-width: 860px) {
+  .poster::before { background: linear-gradient(180deg, rgba(20,11,46,0) 0, rgba(20,11,46,0) 150px, var(--night) 300px); }
+  .poster .art { height: 320px; object-position: 92% 70%; }
+  .poster .wrap { padding-block: 20px 60px; }
+  .pitch { margin-top: 268px; }
+  .legend, .shots, .install { grid-template-columns: minmax(0, 1fr); }
+  .install { gap: 36px; }
+  section { padding-block: 64px 0; }
+}
+@media (max-width: 460px) {
+  .legend li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .go { font-size: 1.45rem; padding: 16px 30px 16px 34px; }
+  .brand { text-shadow: 0 1px 8px var(--night); }
+}
+@media (prefers-reduced-motion: reduce) { .go { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="poster">
+  <img class="art" src="img/hero.jpg" alt="A pink flamingo in a sweatband runs along the Tel Aviv beach at sunset with an open laptop under its wing.">
+  <div class="wrap">
+    <div class="brand"><b>Token Heist</b><i>TLV</i></div>
+    <div class="pitch">
+      <h1><span>My son got the game.</span><span class="b">I got a deadline.</span></h1>
+      <div class="script">so I gave my terminal a HUD</div>
+      <p>Token Heist is a Mac terminal for Claude Code that looks like the thing everyone else is playing. Same work, same prompts, same bills. Now with heat, a radar, a radio and a flamingo.</p>
+      <span class="go-shadow"><a class="go" id="download" href="https://github.com/pionion-ai/token-heist/releases/download/v1.0.0/TokenHeist-1.0.0.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="square" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
+        Download for Mac</a></span>
+      <p class="facts">Free. 15 MB. macOS 14 or later, Apple silicon and Intel. Signed and notarised by Apple.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap shot-band">
+    <div class="frame"><img src="img/session.jpg" width="1600" height="935" alt="A Token Heist session: Claude Code fixing a login bug, with the mission list, the crew, a map of the project and a phone ringing with a helper's report."></div>
+    <p class="cap">Mid-job: Claude is editing <code>src/auth/login.ts</code>, three of five heat diamonds are lit, the session has cost $1.24, and a helper agent is calling to report back.</p>
+  </div>
+
+  <section class="wrap">
+    <h2><span class="script">how to read</span>the HUD</h2>
+    <p class="lede">Everything on screen is a real number from Claude Code, dressed up. Nothing is invented to look busy.</p>
+    <ul class="legend">
+      <li><span class="k sun">Heat<span class="diamonds">◆◆◆◇◇</span></span><span class="v">Your context window. One diamond per 20% used. The fifth one pulses, and you know why.</span></li>
+      <li><span class="k teal">Radar</span><span class="v">Sweeps while Claude works. Every tool call is a blip: teal for a read, pink for an edit, orange for a shell command.</span></li>
+      <li><span class="k pink">The flamingo</span><span class="v">Acts out what Claude is doing: thinking, reading, pecking at an edit, running, surfing the web, celebrating when the job is done.</span></li>
+      <li><span class="k violet">Crew</span><span class="v">Helper agents are chicks. They trot while they are out, and phone you when they are back with a report.</span></li>
+      <li><span class="k orange">The Stash</span><span class="v">Every Claude Code command as a card. Search by what you want (“undo”, “cost”), pin favourites, level up as you use them.</span></li>
+      <li><span class="k teal">Map</span><span class="v">A tower per folder Claude has touched. Taller is busier, pink means edited, the pin is where Claude is now.</span></li>
+      <li><span class="k sun">5H and week dials</span><span class="v">Your usage limits as Claude Code reports them. They turn red and throb from 90%.</span></li>
+      <li><span class="k pink">Radio</span><span class="v">Drives Spotify or Apple Music, and keeps a chart of how many lines you shipped to each song.</span></li>
+      <li><span class="k orange">Wipeout</span><span class="v">A turn that dies on a rate limit or a server error. A single failed command only makes the flamingo stumble.</span></li>
+      <li><span class="k violet">Game over</span><span class="v">You typed <code>/exit</code>. Here are the session's totals. Go and see your family.</span></li>
+    </ul>
+  </section>
+
+  <section class="wrap">
+    <h2><span class="script">seen on</span>the Tayelet</h2>
+    <div class="shots">
+      <figure><div class="frame"><img src="img/stash.jpg" width="1600" height="980" loading="lazy" alt="The Stash: command cards grouped into classes, with Rewind selected."></div><figcaption><b>The Stash</b>43 commands, sorted by what you are trying to do.</figcaption></figure>
+      <figure><div class="frame"><img src="img/celebration.jpg" width="1600" height="903" loading="lazy" alt="A banner reading Weapon acquired: Rewind, with a flamingo in sunglasses and confetti."></div><figcaption><b>Weapon acquired</b>The first time you use a command, it says so.</figcaption></figure>
+      <figure><div class="frame"><img src="img/radio.jpg" width="1600" height="1066" loading="lazy" alt="The radio: a dial of stations around a record, with a chart of lines written per song."></div><figcaption><b>Radio</b>Drag the record to scratch. The chart is real.</figcaption></figure>
+      <figure><div class="frame"><img src="img/wheel.jpg" width="1600" height="1024" loading="lazy" alt="The command wheel: Model, Effort, Mode, Compact, Clear, Resume, Context and Yours."></div><figcaption><b>Command wheel</b>⌘K, turn, pick. Model, effort, compact, clear.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2><span class="script">four steps to</span>the job</h2>
+    <div class="install">
+      <ol class="steps">
+        <li><span>Download <code>TokenHeist-1.0.0.dmg</code>, open it, and drag Token Heist to Applications.</span></li>
+        <li><span>Open it and click a folder. That is where Claude will work.</span></li>
+        <li><span>Set the Loadout: model, effort and permission mode.</span></li>
+        <li><span>Press Start and type a prompt, the way you always do.</span></li>
+      </ol>
+      <div class="slip-shadow"><div class="slip">
+        <h3><span class="script">tip-off:</span>before you go in</h3>
+        <ul>
+          <li>You need <a href="https://claude.com/claude-code">Claude Code</a> installed and signed in. Without it the app opens as a plain terminal.</li>
+          <li>The app makes no network connections. No account, no analytics, no update checks.</li>
+          <li>Your own Claude settings files are never read or changed.</li>
+          <li>macOS will ask before the radio controls Spotify or Music. Say no and everything else still works.</li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+
+  <div class="wrap again">
+    <h2>He has side missions.<br>You have a backlog.</h2>
+    <span class="go-shadow"><a class="go" href="https://github.com/pionion-ai/token-heist/releases/download/v1.0.0/TokenHeist-1.0.0.dmg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="square" aria-hidden="true"><path d="M12 3v13M6 11l6 6 6-6M4 21h16"/></svg>
+      Download for Mac</a></span>
+    <p class="sum">TokenHeist-1.0.0.dmg · sha256 d3cce4590aea2daf4632e25321c2eeb52c69ad46e7a166cb0de7e025761c2525</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Token Heist 1.0.0. All artwork, characters and lettering are original.</p>
+    <p>Not affiliated with or endorsed by Anthropic, Spotify, Apple or any game publisher. “Claude” and “Claude Code” are trademarks of Anthropic.</p>
+  </div>
+</footer>
+
+</body>
+</html>
