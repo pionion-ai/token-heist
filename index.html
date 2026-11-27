@@ -93,7 +93,7 @@ h1 .b { color: var(--sun); }
 /* Session shot */
 .shot-band { margin-top: -36px; position: relative; z-index: 3; }
 .frame { border: 2px solid var(--violet); background: var(--plate); box-shadow: 10px 10px 0 rgba(155,107,255,.28); }
-.frame img { width: 100%; }
+.frame img, .frame video { display: block; width: 100%; height: auto; }
 .cap { font-size: .9rem; color: var(--dim); margin: 16px 0 0; max-width: 46rem; }
 
 /* Legend */
@@ -173,8 +173,8 @@ footer p { margin: 0 0 8px; max-width: 52rem; }
 
 <main>
   <div class="wrap shot-band">
-    <div class="frame"><img src="img/session.jpg" width="1600" height="935" alt="A Token Heist session: Claude Code fixing a login bug, with the mission list, the crew, a map of the project and a phone ringing with a helper's report."></div>
-    <p class="cap">Mid-job: Claude is editing <code>src/auth/login.ts</code>, three of five heat diamonds are lit, the session has cost $1.24, and a helper agent is calling to report back.</p>
+    <div class="frame"><video src="demo.mp4" poster="img/session.jpg" width="1280" height="720" autoplay muted loop playsinline controls></video></div>
+    <p class="cap">Thirty seconds of a session: pick a folder, hand over a bug, take a helper's call, switch model from the wheel, fire a command from the Stash. The recording is staged with a stand-in for Claude Code, so nothing real is on screen.</p>
   </div>
 
   <section class="wrap">
