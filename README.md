@@ -6,6 +6,14 @@ A Mac terminal for Claude Code with a game-style HUD.
 
 ![Token Heist](card.png)
 
+![A Token Heist session](img/session.jpg)
+
+| | |
+|---|---|
+| ![The Stash](img/stash.jpg) | ![A weapon acquired](img/celebration.jpg) |
+| ![The radio](img/radio.jpg) | ![The command wheel](img/wheel.jpg) |
+| ![The Trip](img/trip.jpg) | ![Game over](img/gameover.jpg) |
+
 Free. macOS 14 or later, Apple silicon and Intel. Signed and notarised by Apple.
 You need [Claude Code](https://claude.com/claude-code) installed and signed in.
 
